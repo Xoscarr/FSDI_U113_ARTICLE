@@ -2,43 +2,45 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import (
     CreateView,
     UpdateView, 
-    DeleteView,    
+    DeleteView,
+
+
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Article
 
-class PostListView(ListView):
-    template_name = "blog/list.html"
-    model = Post
+class ArticleListView(ListView):
+    template_name = "article/list.html"
+    model = Article
 
 
-class PostDetailView(DetailView):
-    template_name = "blog/detail.html"
-    model = Post 
+class ArticleDetailView(DetailView):
+    template_name = "article/detail.html"
+    model = Article
 
-class PostCreateView(LoginRequiredMixin, CreateView):
-    template_name = "blog/new.html"
-    model = Post
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    template_name = "article/new.html"
+    model = Article
     fields = ['title', 'body']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    template_name = "blog/edit.html"
-    model = Post
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    template_name = "article/edit.html"
+    model = Article
     fields = ["title", "body"]
 
     def test_func(self):
         obj = self.get_object()
         return obj.author == self.request.user 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    template_name = "blog/delete.html"
-    model = Post
-    success_url = reverse_lazy("post_list")
+class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    template_name = "article/delete.html"
+    model = Article
+    success_url = reverse_lazy("article_list")
 
     def test_func(self):
         obj = self.get_object()

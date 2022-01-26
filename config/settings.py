@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'pages',
     'articles', 
     'accounts',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +135,5 @@ LOGOUT_REDIRECT_URL = 'login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
